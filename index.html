@@ -157,9 +157,10 @@
         text-align: center;
         font-size: 12px;
         color: var(--sage-dark);
+        overflow: hidden;
       }
 
-      /* ---------- SERVICES ---------- */
+      /* ---------- SERVICES / GALERIE ---------- */
       .section {
         padding: 90px 60px;
       }
@@ -186,45 +187,70 @@
         font-size: 15.5px;
       }
 
-      .cards {
+      .gallery {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 28px;
-        max-width: 1000px;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 26px;
+        max-width: 1100px;
         margin: 0 auto;
       }
 
-      .card {
+      .item-card {
         background: var(--sage-light);
-        border-radius: 22px;
-        padding: 34px 32px;
+        border-radius: 18px;
+        padding: 18px 18px 22px;
+        text-align: center;
       }
 
-      .card h3 {
+      .item-photo {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+        overflow: hidden;
+      }
+
+      .item-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .item-card h4 {
         font-family: 'Fraunces', serif;
-        font-size: 22px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 18px;
+        font-weight: 500;
+        font-size: 17px;
+        margin-bottom: 10px;
       }
 
-      .card ul {
-        list-style: none;
+      .item-prices {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        margin-bottom: 8px;
       }
 
-      .card li {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 14.5px;
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(110, 122, 95, .25);
+      .item-prices span {
+        background: var(--cream);
+        border-radius: 20px;
+        padding: 5px 10px;
         color: #3d4235;
       }
 
-      .card li:last-child {
-        border-bottom: none;
+      .item-prices span b {
+        color: var(--ink);
+      }
+
+      .item-caution {
+        font-size: 11px;
+        font-style: italic;
+        color: var(--sage-dark);
       }
 
       /* ---------- STEPS ---------- */
@@ -292,6 +318,13 @@
         color: var(--sage-dark);
       }
 
+      .privacy-note {
+        margin-top: 22px;
+        font-size: 12.5px;
+        font-style: italic;
+        color: #4a4f45;
+      }
+
       .contact-form {
         flex: 1;
         display: flex;
@@ -352,10 +385,6 @@
           padding: 60px 24px;
         }
 
-        .cards {
-          grid-template-columns: 1fr;
-        }
-
         .steps {
           grid-template-columns: 1fr;
         }
@@ -373,7 +402,7 @@
     <nav>
       <div class="nav-brand">BARBINA</div>
       <ul>
-        <li><a href="#services">Nos services</a></li>
+        <li><a href="#services">Notre catalogue</a></li>
         <li><a href="#comment">Comment ça marche</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -386,61 +415,118 @@
         <div class="eyebrow">Location · Événementiel & Puériculture</div>
         <h1>Le confort, clé en main.</h1>
         <p>
-          <!-- MODIFIE ICI : ta zone -->
           Barbina loue et livre tout le matériel dont vous avez besoin pour vos événements
-          et votre quotidien de parents, partout en <b>Lançon de Provence.</b>
+          et votre quotidien, partout à <b>Lançon-de-Provence et ses alentours</b>.
         </p>
         <div class="hero-actions">
           <a href="#contact" class="btn-primary">Demander un devis</a>
           <a href="#services" class="btn-secondary">Voir le catalogue</a>
         </div>
       </div>
-      <div class="hero-visual"><img src="barbinalogo.webp" style="width:350px;height:350px;border-radius:50%"></div>
+      <div class="hero-visual"><img src="img/barbinalogo.webp"
+          style="width:100%;height:100%;border-radius:50%;object-fit:cover"></div>
     </section>
 
-    <!-- SERVICES -->
+    <!-- CATALOGUE / GALERIE -->
     <section class="section" id="services">
       <div class="section-head">
-        <div class="eyebrow">Nos deux univers</div>
-        <h2>Un seul interlocuteur, deux expertises</h2>
-        <p>Que vous organisiez un mariage, un anniversaire, ou que vous attendiez un heureux événement, Barbina s'occupe
-          du matériel.</p>
+        <div class="eyebrow">Notre catalogue</div>
+        <h2>Tout notre matériel, prêt à l'emploi</h2>
+        <p>Que vous organisiez un mariage, un anniversaire, ou que vous ayez besoin de matériel au quotidien,
+          Barbina s'occupe du matériel professionnel prêt à l'emploi.</p>
       </div>
-      <div class="cards">
-        <div class="card">
-          <h3>
-            <svg class="icon" width="24" height="24" viewBox="0 0 24 24">
-              <rect x="4" y="9" width="16" height="9" rx="1" />
-              <path d="M4 9 L12 3 L20 9" />
-            </svg>
-            Événementiel
-          </h3>
-          <ul>
-            <li>Trepied photo</li>
-            <li>jeux passe trappe</li>
-            <li>jeu cornhole</li>
-            <li>Diables</li>
-            <li>Guirlandes & sonorisation</li>
-            <li>ventilateur Brumisateur</li>
-            <li>shampouineuse</li>
-            <li>appareil photo instantané</li>
-          </ul>
+
+      <div class="gallery">
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/Trépieravechousse.png" alt="Trépied photo"></div>
+          <h4>Trépied Photo</h4>
+          <div class="item-prices">
+            <span>Jour <b>[PRIX]€</b></span>
+            <span>Weekend <b>[PRIX]€</b></span>
+            <span>Semaine <b>[PRIX]€</b></span>
+          </div>
+          <div class="item-caution">Caution : valeur du matériel</div>
         </div>
-        <div class="card">
-          <h3>
-            <svg class="icon" width="24" height="24" viewBox="0 0 24 24">
-              <circle cx="12" cy="7" r="4" />
-              <path d="M5 21 Q5 14 12 14 Q19 14 19 21" />
-            </svg>
-            Puériculture
-          </h3>
-          <ul>
-            <li>Lits parapluie</li>
-            <!-- <li>Poussettes</li>
-        <li>Chaises hautes</li>
-        <li>Humidificateurs & stérilisateurs</li> -->
-          </ul>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/Passe trappe.png" alt="Jeu de passe-trappe"></div>
+          <h4>Jeu de Passe-Trappe</h4>
+          <div class="item-prices">
+            <span>Jour <b>5€</b></span>
+            <span>Weekend <b>8€</b></span>
+            <span>Semaine <b>22€</b></span>
+          </div>
+          <div class="item-caution">Caution : valeur du matériel</div>
         </div>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/Cornhole.png" alt="Jeu de cornhole"></div>
+          <h4>Jeu de Cornhole</h4>
+          <div class="item-prices">
+            <span>Jour <b>6€</b></span>
+            <span>Weekend <b>10€</b></span>
+            <span>Semaine <b>25€</b></span>
+          </div>
+          <div class="item-caution">Caution : valeur du matériel</div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/diable6roues.jpg" alt="Diable de manutention"></div>
+          <h4>Diable de Manutention</h4>
+          <div class="item-prices">
+            <span>Jour <b>[PRIX]€</b></span>
+            <span>Weekend <b>[PRIX]€</b></span>
+            <span>Semaine <b>[PRIX]€</b></span>
+          </div>
+          <div class="item-caution">Caution : valeur du matériel</div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/Ventilateur_brumisateur_exterieur.png"
+              alt="Ventilateur brumisateur extérieur Pro"></div>
+          <h4>Ventilateur Brumisateur Extérieur Pro</h4>
+          <div class="item-prices">
+            <span>Jour <b>25€</b></span>
+            <span>Weekend <b>45€</b></span>
+            <span>Semaine <b>100€</b></span>
+          </div>
+          <div class="item-caution">Caution : 200€</div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/ShampouineusebisselC5pro.png" alt="Shampouineuse"></div>
+          <h4>Shampouineuse</h4>
+          <div class="item-prices">
+            <span>Jour <b>15€</b></span>
+            <span>Weekend <b>25€</b></span>
+            <span>Semaine <b>60€</b></span>
+          </div>
+          <div class="item-caution">Caution : 150€</div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/appareilphotoinstaxwide.jpg" alt="Appareil photo instantané"></div>
+          <h4>Appareil Photo Instantané</h4>
+          <div class="item-prices">
+            <span>Jour <b>[PRIX]€</b></span>
+            <span>Weekend <b>[PRIX]€</b></span>
+            <span>Semaine <b>[PRIX]€</b></span>
+          </div>
+          <div class="item-caution">Caution : valeur du matériel</div>
+        </div>
+
+        <div class="item-card">
+          <div class="item-photo"><img src="img/lit_AeroMoov.png" alt="Lit parapluie"></div>
+          <h4>Lit Parapluie</h4>
+          <div class="item-prices">
+            <span>Jour <b>10€</b></span>
+            <span>Weekend <b>18€</b></span>
+            <span>Semaine <b>35€</b></span>
+          </div>
+          <div class="item-caution">Caution : valeur du matériel</div>
+        </div>
+
       </div>
     </section>
 
@@ -458,13 +544,13 @@
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <h4>recuperation du materiel </h4>
-          <p>Vous venez le chercher (suplement si on livre sous condition)</p>
+          <h4>Retrait du matériel</h4>
+          <p>Vous venez récupérer votre commande sur place. Livraison possible sous condition.</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <h4>On récupère</h4>
-          <p>À la fin de la location, on vient tout récupérer, sans effort pour vous.</p>
+          <h4>Remise du matériel</h4>
+          <p>À la fin de la location, vous nous rapportez le matériel, sans effort pour vous.</p>
         </div>
       </div>
     </section>
@@ -478,12 +564,11 @@
       <div class="contact">
         <div class="contact-info">
           <div class="row"><b>Tél.</b> 06 60 57 13 57</div>
-          <div class="row"><b>Email</b>barbinaloc@gmail.com</div>
-          <div class="row"><b>Zone</b>Allees des pinedes, Lançon de provence, 13680</div>
-          <div class="row"><b>Réseaux</b>[@barbina.instagram]</div>
+          <div class="row"><b>Email</b> barbinaloc@gmail.com</div>
+          <div class="row"><b>Zone</b> Allée des Pinèdes, Lançon-de-Provence, 13680</div>
+          <!-- <div class="row"><b>Réseaux</b> [@barbina.instagram]</div> -->
+          <p class="privacy-note">*Aucune information personnelle n'est prise.</p>
         </div>
-        <!-- MODIFIE ICI : ce formulaire n'envoie rien pour l'instant,
-         relie-le à ta messagerie ou à un service comme Formspree -->
         <form action="https://formsubmit.co/barbinaloc@gmail.com" method="POST" class="contact-form">
           <input type="text" name="nom" placeholder="Ton nom" required>
           <input type="email" name="email" placeholder="Ton email" required>
