@@ -187,17 +187,28 @@
 
       .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-        gap: 26px;
-        max-width: 1100px;
+        grid-template-columns: repeat(6, 1fr);
+        grid-auto-rows: 1fr;
+        gap: 22px;
+        max-width: 1200px;
         margin: 0 auto;
+      }
+
+      .item-card.off-page {
+        display: none;
       }
 
       .item-card {
         background: var(--sage-light);
         border-radius: 18px;
-        padding: 18px 18px 22px;
+        padding: 16px 14px 18px;
         text-align: center;
+        cursor: pointer;
+        transition: box-shadow .2s ease;
+      }
+
+      .item-card:hover {
+        box-shadow: 0 6px 18px rgba(38, 42, 51, .12);
       }
 
       .item-photo {
@@ -208,7 +219,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 14px;
+        margin-bottom: 10px;
         overflow: hidden;
       }
 
@@ -218,37 +229,157 @@
         object-fit: cover;
       }
 
+      .badge-degressif {
+        display: inline-block;
+        background: var(--gold);
+        color: var(--cream);
+        font-size: 9.5px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border-radius: 20px;
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      .item-hook {
+        font-size: 10px;
+        font-style: italic;
+        color: var(--sage-dark);
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
       .item-card h4 {
         font-family: 'Fraunces', serif;
         font-weight: 500;
-        font-size: 17px;
-        margin-bottom: 10px;
-      }
-
-      .item-prices {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        font-size: 12px;
+        font-size: 14.5px;
         margin-bottom: 8px;
+        line-height: 1.3;
       }
 
-      .item-prices span {
-        background: var(--cream);
-        border-radius: 20px;
-        padding: 5px 10px;
-        color: #3d4235;
-      }
-
-      .item-prices span b {
+      .item-collapsed-price {
+        font-size: 12.5px;
+        font-weight: 600;
         color: var(--ink);
       }
 
-      .item-Caution {
-        font-size: 11px;
+      .item-tiers {
+        display: none;
+        margin-top: 10px;
+      }
+
+      .item-card.expanded .item-tiers {
+        display: block;
+      }
+
+      .item-card.expanded .item-collapsed-price {
+        display: none;
+      }
+
+      .tier-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+        margin-bottom: 8px;
+      }
+
+      .tier-btn {
+        font-family: 'Jost', sans-serif;
+        font-size: 9.5px;
+        padding: 5px 8px;
+        border-radius: 14px;
+        border: 1px solid var(--sage-dark);
+        background: var(--cream);
+        color: var(--ink);
+        cursor: pointer;
+      }
+
+      .tier-btn.active {
+        background: var(--ink);
+        color: var(--cream);
+        border-color: var(--ink);
+      }
+
+      .selected-price {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      .discount-percent {
+        display: inline-block;
+        margin-left: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gold);
+      }
+
+      .item-caution {
+        font-size: 10.5px;
         font-style: italic;
         color: var(--sage-dark);
+      }
+
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .pagination-controls button {
+        background: var(--ink);
+        color: var(--cream);
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .pagination-controls button:disabled {
+        opacity: .3;
+        cursor: default;
+      }
+
+      .pagination-controls span {
+        font-size: 13px;
+        color: var(--ink);
+      }
+
+      @media (max-width: 1000px) {
+        .gallery {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .gallery {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 16px;
+          padding-bottom: 14px;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery .item-card {
+          flex: 0 0 78%;
+          scroll-snap-align: center;
+        }
+
+        .gallery .item-card.off-page {
+          display: block !important;
+        }
+
+        .pagination-controls {
+          display: none;
+        }
       }
 
       /* ---------- STEPS ---------- */
@@ -431,118 +562,16 @@
         <div class="eyebrow">Notre catalogue</div>
         <h2>BARBINA s'occupe de vous fournir l'équipement professionnel prêt à l'emploi</h2>
         <p>Que vous organisiez un mariage, un anniversaire, ou que vous ayez besoin de matériel au quotidien,
-          "BARBINA s'occupe de vous fournir l'équipement professionnel prêt à l'emploi.</p>
+          BARBINA s'occupe de vous fournir l'équipement professionnel prêt à l'emploi. Cliquez sur un article pour
+          voir le détail des tarifs selon la durée.</p>
       </div>
 
-      <div class="gallery">
+      <div class="gallery" id="gallery"></div>
 
-        <div class="item-card">
-          <div class="item-photo"><img src="img/tredpied.jpg" alt="Trépied photo"></div>
-          <h4>Trépied Photo</h4>
-          <div class="item-prices">
-            <span>Jour <b>3€</b></span>
-            <span>Weekend <b>5€</b></span>
-            <span>Semaine <b>12€</b></span>
-            <span>Caution <b>20€</b></span>
-          </div>
-
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/Passe trappe.png" alt="Jeu de passe-trappe"></div>
-          <h4>Jeu de Passe-Trappe</h4>
-          <div class="item-prices">
-            <span>Jour <b>5€</b></span>
-            <span>Weekend <b>8€</b></span>
-            <span>Semaine <b>22€</b></span>
-            <span>Caution <b>60€</b></span>
-          </div>
-
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/Cornhole.png" alt="Jeu de cornhole"></div>
-          <h4>Jeu de Cornhole</h4>
-          <div class="item-prices">
-            <span>Jour <b>6€</b></span>
-            <span>Weekend <b>10€</b></span>
-            <span>Semaine <b>25€</b></span>
-            <span>Caution <b>100€</b></span>
-          </div>
-
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/diable6roues.jpg" alt="Diable de manutention"></div>
-          <h4>Diable de Manutention</h4>
-          <div class="item-prices">
-            <span>Jour <b>6€</b></span>
-            <span>Weekend <b>10€</b></span>
-            <span>Semaine <b>23€</b></span>
-            <span>Caution <b>50€</b></span>
-          </div>
-
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/Ventilateur_brumisateur_exterieur.png"
-              alt="Ventilateur brumisateur extérieur Pro"></div>
-          <h4>Ventilateur Brumisateur Extérieur Pro</h4>
-          <div class="item-prices">
-            <span>Jour <b>25€</b></span>
-            <span>Weekend <b>45€</b></span>
-            <span>Semaine <b>200€</b></span>
-            <span>Caution <b>250€</b></span>
-          </div>
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/ShampouineusebisselC5pro.png" alt="Shampouineuse"></div>
-          <h4>Shampouineuse</h4>
-          <div class="item-prices">
-            <span>Jour <b>15€</b></span>
-            <span>Weekend <b>25€</b></span>
-            <span>Semaine <b>60€</b></span>
-            <span>Caution <b>150€</b></span>
-          </div>
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/photoInstax.png" alt="Appareil photo instantané"></div>
-          <h4>Appareil Photo Instantané</h4>
-          <div class="item-prices">
-            <span>Jour <b>20€</b></span>
-            <span>Weekend <b>30€</b></span>
-            <span>Semaine <b>85€</b></span>
-            <span>Caution <b>130€</b></span>
-          </div>
-
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/lit_AeroMoov.png" alt="Lit parapluie"></div>
-          <h4>Lit Parapluie</h4>
-          <div class="item-prices">
-            <span>Jour <b>10€</b></span>
-            <span>Weekend <b>18€</b></span>
-            <span>Semaine <b>35€</b></span>
-            <span>Caution <b>120€</b></span>
-          </div>
-
-        </div>
-
-        <div class="item-card">
-          <div class="item-photo"><img src="img/plastifieuse.jpg" alt="Jeu de cornhole"></div>
-          <h4>MAXDONE Plastifieuse A4, 5 en 1</h4>
-          <div class="item-prices">
-            <span>Jour <b>5€</b></span>
-            <span>Weekend <b>8€</b></span>
-            <span>Semaine <b>20€</b></span>
-            <span>Caution <b>30€</b></span>
-          </div>
-
-        </div>
-
+      <div class="pagination-controls">
+        <button id="prevPage" type="button" aria-label="Page précédente">‹</button>
+        <span id="pageIndicator">Page 1 / 1</span>
+        <button id="nextPage" type="button" aria-label="Page suivante">›</button>
       </div>
     </section>
 
@@ -601,6 +630,153 @@
     </section>
 
     <footer>Barbina — Le confort clé en main</footer>
+
+    <script>
+      // ============================================================
+      // CATALOGUE BARBINA — prix dégressif + pagination/carrousel
+      // Pour ajouter/retirer un article, modifie juste le tableau ITEMS.
+      // Pour changer le taux dégressif, modifie DEGRESSIVE_RATE (0.10 = -10%).
+      // ============================================================
+
+      const DEGRESSIVE_RATE = 0.10; // -10% par palier par rapport au palier précédent
+
+      const TIERS = [
+        { label: 'Jour', days: 1 },
+        { label: 'Semaine', days: 7 },
+        { label: '2 Semaines', days: 14 },
+        { label: 'Mois', days: 30 },
+      ];
+
+      const ITEMS = [
+        { name: 'Trépied Photo', img: 'img/tredpied.jpg', basePrice: 3, caution: '20€' },
+        { name: 'Jeu de Passe-Trappe', img: 'img/Passe trappe.png', basePrice: 5, caution: '60€' },
+        { name: 'Jeu de Cornhole', img: 'img/Cornhole.png', basePrice: 6, caution: '100€' },
+        { name: 'Diable de Manutention', img: 'img/diable6roues.jpg', basePrice: 6, caution: '50€' },
+        { name: 'Ventilateur Brumisateur Extérieur Pro', img: 'img/Ventilateur_brumisateur_exterieur.png', basePrice: 25, caution: '250€' },
+        { name: 'Shampouineuse', img: 'img/ShampouineusebisselC5pro.png', basePrice: 15, caution: '150€' },
+        { name: 'Appareil Photo Instantané', img: 'img/photoInstax.png', basePrice: 20, caution: '130€' },
+        { name: 'Lit Parapluie', img: 'img/lit_AeroMoov.png', basePrice: 10, caution: '120€' },
+        { name: 'MAXDONE Plastifieuse A4, 5 en 1', img: 'img/plastifieuse.jpg', basePrice: 5, caution: '30€' },
+      ];
+
+      const PER_PAGE = 18; // 6 colonnes x 3 lignes
+      let currentPage = 0;
+
+      function tierPrice(basePrice, tierIndex) {
+        const factor = Math.pow(1 - DEGRESSIVE_RATE, tierIndex);
+        const days = TIERS[tierIndex].days;
+        return Math.round(basePrice * factor * days);
+      }
+
+      function tierDiscountPercent(tierIndex) {
+        const factor = Math.pow(1 - DEGRESSIVE_RATE, tierIndex);
+        return Math.round((1 - factor) * 100);
+      }
+
+      function buildCard(item, idx) {
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.dataset.idx = idx;
+
+        const photo = document.createElement('div');
+        photo.className = 'item-photo';
+        photo.innerHTML = `<img src="${item.img}" alt="${item.name}">`;
+        card.appendChild(photo);
+
+        const badge = document.createElement('div');
+        badge.className = 'badge-degressif';
+        badge.textContent = 'Prix dégressif';
+        card.appendChild(badge);
+
+        const hook = document.createElement('div');
+        hook.className = 'item-hook';
+        hook.textContent = 'Plus vous gardez longtemps, moins ça coûte au jour !';
+        card.appendChild(hook);
+
+        const h4 = document.createElement('h4');
+        h4.textContent = item.name;
+        card.appendChild(h4);
+
+        const collapsedPrice = document.createElement('div');
+        collapsedPrice.className = 'item-collapsed-price';
+        collapsedPrice.textContent = 'À partir de ' + item.basePrice + '€ / jour';
+        card.appendChild(collapsedPrice);
+
+        const tiersWrap = document.createElement('div');
+        tiersWrap.className = 'item-tiers';
+
+        const btnRow = document.createElement('div');
+        btnRow.className = 'tier-buttons';
+        TIERS.forEach((tier, tIdx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'tier-btn' + (tIdx === 0 ? ' active' : '');
+          btn.textContent = tier.label;
+          btn.dataset.tier = tIdx;
+          btnRow.appendChild(btn);
+        });
+        tiersWrap.appendChild(btnRow);
+
+        const selPrice = document.createElement('div');
+        selPrice.className = 'selected-price';
+        tiersWrap.appendChild(selPrice);
+
+        function updateSelPrice(tIdx) {
+          const price = tierPrice(item.basePrice, tIdx);
+          const percent = tierDiscountPercent(tIdx);
+          selPrice.innerHTML = price + '€' + (percent > 0 ? ` <span class="discount-percent">-${percent}%</span>` : '');
+        }
+        updateSelPrice(0);
+
+        const caution = document.createElement('div');
+        caution.className = 'item-caution';
+        caution.textContent = 'Caution : ' + item.caution;
+        tiersWrap.appendChild(caution);
+
+        card.appendChild(tiersWrap);
+
+        btnRow.querySelectorAll('.tier-btn').forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            btnRow.querySelectorAll('.tier-btn').forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+            const tIdx = parseInt(btn.dataset.tier, 10);
+            updateSelPrice(tIdx);
+          });
+        });
+
+        card.addEventListener('click', () => {
+          card.classList.toggle('expanded');
+        });
+
+        return card;
+      }
+
+      function renderGallery() {
+        const grid = document.getElementById('gallery');
+        grid.innerHTML = '';
+        ITEMS.forEach((item, idx) => {
+          const card = buildCard(item, idx);
+          const page = Math.floor(idx / PER_PAGE);
+          if (page !== currentPage) card.classList.add('off-page');
+          grid.appendChild(card);
+        });
+        const totalPages = Math.max(1, Math.ceil(ITEMS.length / PER_PAGE));
+        document.getElementById('pageIndicator').textContent = `Page ${currentPage + 1} / ${totalPages}`;
+        document.getElementById('prevPage').disabled = currentPage === 0;
+        document.getElementById('nextPage').disabled = currentPage >= totalPages - 1;
+      }
+
+      document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 0) { currentPage--; renderGallery(); }
+      });
+      document.getElementById('nextPage').addEventListener('click', () => {
+        const totalPages = Math.ceil(ITEMS.length / PER_PAGE);
+        if (currentPage < totalPages - 1) { currentPage++; renderGallery(); }
+      });
+
+      renderGallery();
+    </script>
 
   </body>
 
