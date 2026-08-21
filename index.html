@@ -136,6 +136,14 @@
         font-size: 15px;
       }
 
+      a:hover {
+        background-position: right center;
+        color: #06892e;
+        text-decoration: none;
+        transition: background-position .2s ease;
+        font-size: 18px;
+      }
+
       .btn-secondary {
         border: 1.5px solid var(--ink);
         padding: 14px 28px;
@@ -204,11 +212,17 @@
         padding: 16px 14px 18px;
         text-align: center;
         cursor: pointer;
-        transition: box-shadow .2s ease;
+        transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
       }
 
       .item-card:hover {
-        box-shadow: 0 6px 18px rgba(38, 42, 51, .12);
+        transform: translateY(-6px);
+        box-shadow: 0 14px 28px rgba(38, 42, 51, .16);
+      }
+
+      .item-card:active {
+        transform: translateY(-2px) scale(.98);
+        box-shadow: 0 6px 14px rgba(38, 42, 51, .14);
       }
 
       .item-photo {
@@ -227,6 +241,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform .35s ease;
+      }
+
+      .item-card:hover .item-photo img {
+        transform: scale(1.07);
       }
 
       .badge-degressif {
@@ -238,16 +257,8 @@
         text-transform: uppercase;
         padding: 3px 9px;
         border-radius: 20px;
-        margin-bottom: 6px;
-        font-weight: 600;
-      }
-
-      .item-hook {
-        font-size: 10px;
-        font-style: italic;
-        color: var(--sage-dark);
         margin-bottom: 8px;
-        line-height: 1.3;
+        font-weight: 600;
       }
 
       .item-card h4 {
@@ -264,51 +275,6 @@
         color: var(--ink);
       }
 
-      .item-tiers {
-        display: none;
-        margin-top: 10px;
-      }
-
-      .item-card.expanded .item-tiers {
-        display: block;
-      }
-
-      .item-card.expanded .item-collapsed-price {
-        display: none;
-      }
-
-      .tier-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        justify-content: center;
-        margin-bottom: 8px;
-      }
-
-      .tier-btn {
-        font-family: 'Jost', sans-serif;
-        font-size: 9.5px;
-        padding: 5px 8px;
-        border-radius: 14px;
-        border: 1px solid var(--sage-dark);
-        background: var(--cream);
-        color: var(--ink);
-        cursor: pointer;
-      }
-
-      .tier-btn.active {
-        background: var(--ink);
-        color: var(--cream);
-        border-color: var(--ink);
-      }
-
-      .selected-price {
-        font-size: 17px;
-        font-weight: 600;
-        color: var(--ink);
-        margin-bottom: 4px;
-      }
-
       .discount-percent {
         display: inline-block;
         margin-left: 6px;
@@ -322,6 +288,167 @@
         font-style: italic;
         color: var(--sage-dark);
       }
+
+      /* ---------- MODAL PRODUIT ---------- */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(38, 42, 51, .55);
+        backdrop-filter: blur(3px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        z-index: 200;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .25s ease;
+      }
+
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-box {
+        background: var(--cream);
+        border-radius: 24px;
+        max-width: 640px;
+        width: 100%;
+        max-height: 88vh;
+        overflow-y: auto;
+        padding: 34px;
+        position: relative;
+        transform: scale(.92) translateY(14px);
+        transition: transform .28s cubic-bezier(.2, .8, .2, 1);
+        box-shadow: 0 24px 60px rgba(38, 42, 51, .3);
+      }
+
+      .modal-overlay.open .modal-box {
+        transform: scale(1) translateY(0);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: var(--sage-light);
+        color: var(--ink);
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background .2s ease, transform .2s ease;
+      }
+
+      .modal-close:hover {
+        background: var(--ink);
+        color: var(--cream);
+        transform: rotate(90deg);
+      }
+
+      .modal-photo {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+        margin-bottom: 20px;
+      }
+
+      .modal-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .modal-box h3 {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 26px;
+        color: var(--ink);
+        margin-bottom: 10px;
+      }
+
+      .modal-desc {
+        font-size: 14.5px;
+        line-height: 1.6;
+        color: #3d4235;
+        margin-bottom: 22px;
+      }
+
+      .price-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+        overflow: hidden;
+        border-radius: 14px;
+      }
+
+      .price-table thead th {
+        background: var(--ink);
+        color: var(--cream);
+        font-size: 11.5px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        font-weight: 600;
+        padding: 10px 12px;
+        text-align: left;
+      }
+
+      .price-table tbody tr {
+        cursor: pointer;
+        transition: background .18s ease;
+        border-bottom: 1px solid rgba(110, 122, 95, .25);
+      }
+
+      .price-table tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      .price-table tbody tr:hover {
+        background: var(--sage-light);
+      }
+
+      .price-table tbody tr.active-row {
+        background: var(--gold);
+      }
+
+      .price-table tbody tr.active-row td {
+        color: var(--cream);
+        font-weight: 600;
+      }
+
+      .price-table td {
+        padding: 10px 12px;
+        font-size: 13.5px;
+        color: var(--ink);
+      }
+
+      .price-table td.price-cell {
+        font-weight: 600;
+      }
+
+      .price-table td .discount-percent {
+        color: var(--gold);
+      }
+
+      .price-table tbody tr.active-row td .discount-percent {
+        color: var(--cream);
+      }
+
+      .modal-caution {
+        font-size: 12.5px;
+        font-style: italic;
+        color: var(--sage-dark);
+        text-align: right;
+      }
+
 
       .pagination-controls {
         display: flex;
@@ -340,6 +467,16 @@
         border-radius: 50%;
         font-size: 16px;
         cursor: pointer;
+        transition: transform .18s ease, background .18s ease;
+      }
+
+      .pagination-controls button:not(:disabled):hover {
+        background: var(--sage-dark);
+        transform: translateY(-2px);
+      }
+
+      .pagination-controls button:not(:disabled):active {
+        transform: translateY(0) scale(.92);
       }
 
       .pagination-controls button:disabled {
@@ -529,7 +666,9 @@
   <body>
 
     <nav>
-      <div class="nav-brand">BARBINA</div>
+      <a href="https://barbina.vercel.app/" target="_blank">
+        <div class="nav-brand">BARBINA</div>
+      </a>
       <ul>
         <li><a href="#services">Notre catalogue</a></li>
         <li><a href="#comment">Comment ça marche</a></li>
@@ -574,6 +713,27 @@
         <button id="nextPage" type="button" aria-label="Page suivante">›</button>
       </div>
     </section>
+
+    <!-- MODAL PRODUIT -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-box">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Fermer">✕</button>
+        <div class="modal-photo"><img id="modalImg" src="" alt=""></div>
+        <div class="badge-degressif">Prix dégressif</div>
+        <h3 id="modalTitle"></h3>
+        <p class="modal-desc" id="modalDesc"></p>
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>Durée</th>
+              <th>Prix</th>
+            </tr>
+          </thead>
+          <tbody id="modalPriceRows"></tbody>
+        </table>
+        <div class="modal-caution" id="modalCaution"></div>
+      </div>
+    </div>
 
     <!-- STEPS -->
     <section class="section steps-wrap" id="comment">
@@ -633,12 +793,12 @@
 
     <script>
       // ============================================================
-      // CATALOGUE BARBINA — prix dégressif + pagination/carrousel
+      // CATALOGUE BARBINA — prix dégressif + pagination/carrousel + modal produit
       // Pour ajouter/retirer un article, modifie juste le tableau ITEMS.
       // Pour changer le taux dégressif, modifie DEGRESSIVE_RATE (0.10 = -10%).
       // ============================================================
 
-      const DEGRESSIVE_RATE = 0.10; // -10% par palier par rapport au palier précédent
+      const DEGRESSIVE_RATE = 0.2; // -10% par palier par rapport au palier précédent
 
       const TIERS = [
         { label: 'Jour', days: 1 },
@@ -648,15 +808,46 @@
       ];
 
       const ITEMS = [
-        { name: 'Trépied Photo', img: 'img/tredpied.jpg', basePrice: 3, caution: '20€' },
-        { name: 'Jeu de Passe-Trappe', img: 'img/Passe trappe.png', basePrice: 5, caution: '60€' },
-        { name: 'Jeu de Cornhole', img: 'img/Cornhole.png', basePrice: 6, caution: '100€' },
-        { name: 'Diable de Manutention', img: 'img/diable6roues.jpg', basePrice: 6, caution: '50€' },
-        { name: 'Ventilateur Brumisateur Extérieur Pro', img: 'img/Ventilateur_brumisateur_exterieur.png', basePrice: 25, caution: '250€' },
-        { name: 'Shampouineuse', img: 'img/ShampouineusebisselC5pro.png', basePrice: 15, caution: '150€' },
-        { name: 'Appareil Photo Instantané', img: 'img/photoInstax.png', basePrice: 20, caution: '130€' },
-        { name: 'Lit Parapluie', img: 'img/lit_AeroMoov.png', basePrice: 10, caution: '120€' },
-        { name: 'MAXDONE Plastifieuse A4, 5 en 1', img: 'img/plastifieuse.jpg', basePrice: 5, caution: '30€' },
+        {
+          name: 'Trépied Photo', img: 'img/tredpied.jpg', basePrice: 3, caution: '20€',
+          desc: "Un trépied stable et léger, parfait pour vos photos et vidéos lors d'un événement ou d'un shooting. Réglable en hauteur, facile à transporter."
+        },
+        {
+          name: 'Jeu de Passe-Trappe', img: 'img/Passe trappe.png', basePrice: 5, caution: '60€',
+          desc: "Un jeu en bois convivial à faire à deux, parfait pour animer un apéritif, un mariage ou une soirée entre amis."
+        },
+        {
+          name: 'Jeu de Cornhole', img: 'img/Cornhole.png', basePrice: 6, caution: '100€',
+          desc: "Le jeu de lancer de sacs en bois, incontournable pour animer un jardin, une plage ou une réception en extérieur."
+        },
+        {
+          name: 'Diable de Manutention', img: 'img/diable6roues.jpg', basePrice: 5, caution: '50€',
+          desc: "Un diable robuste pour transporter facilement vos charges lourdes lors d'un déménagement, d'une installation ou d'un événement."
+        },
+        {
+          name: 'Ventilateur Brumisateur Extérieur Pro', img: 'img/Ventilateur_brumisateur_exterieur.png', basePrice: 25, caution: '250€',
+          desc: "Un ventilateur brumisateur puissant pour rafraîchir vos invités lors d'un événement en extérieur, même en pleine chaleur."
+        },
+        {
+          name: 'Shampouineuse', img: 'img/ShampouineusebisselC5pro.png', basePrice: 15, caution: '150€',
+          desc: "Une shampouineuse professionnelle pour nettoyer en profondeur moquettes, tapis et canapés en un seul passage."
+        },
+        {
+          name: 'Appareil Photo Instantané', img: 'img/photoInstax.png', basePrice: 20, caution: '130€',
+          desc: "Un appareil photo instantané pour capturer et imprimer des souvenirs sur le moment, idéal pour animer un mariage ou un anniversaire."
+        },
+        {
+          name: 'Lit Parapluie', img: 'img/lit_AeroMoov.png', basePrice: 10, caution: '120€',
+          desc: "Un lit parapluie compact et confortable pour les tout-petits, facile à monter, idéal en déplacement ou pour un séjour."
+        },
+        {
+          name: 'MAXDONE Plastifieuse A4, 5 en 1', img: 'img/plastifieuse.jpg', basePrice: 5, caution: '30€',
+          desc: "Une plastifieuse compacte 5-en-1 pour protéger et donner un rendu pro à vos documents, affiches ou panneaux."
+        },
+        {
+          name: 'debroussailleuse electric cordless multi disque', img: 'img/debrou.jpg', basePrice: 7, caution: '80€',
+          desc: "Débroussailleuse Électrique sans Fil 4-en-1 Coupe Bordure avec 2 Batteries 4.0 Ah, Tête Pivotante 90°, Poignée Réglable, 4 Types Lames Efficace pour Jardin Pelouse et Désherbage Facile"
+        },
       ];
 
       const PER_PAGE = 18; // 6 colonnes x 3 lignes
@@ -688,11 +879,6 @@
         badge.textContent = 'Prix dégressif';
         card.appendChild(badge);
 
-        const hook = document.createElement('div');
-        hook.className = 'item-hook';
-        hook.textContent = 'Plus vous gardez longtemps, moins ça coûte au jour !';
-        card.appendChild(hook);
-
         const h4 = document.createElement('h4');
         h4.textContent = item.name;
         card.appendChild(h4);
@@ -702,52 +888,7 @@
         collapsedPrice.textContent = 'À partir de ' + item.basePrice + '€ / jour';
         card.appendChild(collapsedPrice);
 
-        const tiersWrap = document.createElement('div');
-        tiersWrap.className = 'item-tiers';
-
-        const btnRow = document.createElement('div');
-        btnRow.className = 'tier-buttons';
-        TIERS.forEach((tier, tIdx) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'tier-btn' + (tIdx === 0 ? ' active' : '');
-          btn.textContent = tier.label;
-          btn.dataset.tier = tIdx;
-          btnRow.appendChild(btn);
-        });
-        tiersWrap.appendChild(btnRow);
-
-        const selPrice = document.createElement('div');
-        selPrice.className = 'selected-price';
-        tiersWrap.appendChild(selPrice);
-
-        function updateSelPrice(tIdx) {
-          const price = tierPrice(item.basePrice, tIdx);
-          const percent = tierDiscountPercent(tIdx);
-          selPrice.innerHTML = price + '€' + (percent > 0 ? ` <span class="discount-percent">-${percent}%</span>` : '');
-        }
-        updateSelPrice(0);
-
-        const caution = document.createElement('div');
-        caution.className = 'item-caution';
-        caution.textContent = 'Caution : ' + item.caution;
-        tiersWrap.appendChild(caution);
-
-        card.appendChild(tiersWrap);
-
-        btnRow.querySelectorAll('.tier-btn').forEach((btn) => {
-          btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            btnRow.querySelectorAll('.tier-btn').forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
-            const tIdx = parseInt(btn.dataset.tier, 10);
-            updateSelPrice(tIdx);
-          });
-        });
-
-        card.addEventListener('click', () => {
-          card.classList.toggle('expanded');
-        });
+        card.addEventListener('click', () => openModal(item));
 
         return card;
       }
@@ -773,6 +914,66 @@
       document.getElementById('nextPage').addEventListener('click', () => {
         const totalPages = Math.ceil(ITEMS.length / PER_PAGE);
         if (currentPage < totalPages - 1) { currentPage++; renderGallery(); }
+      });
+
+      // ---------------- MODAL PRODUIT ----------------
+      const modalOverlay = document.getElementById('modalOverlay');
+      const modalImg = document.getElementById('modalImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalPriceRows = document.getElementById('modalPriceRows');
+      const modalCaution = document.getElementById('modalCaution');
+      const modalClose = document.getElementById('modalClose');
+
+      function openModal(item) {
+        modalImg.src = item.img;
+        modalImg.alt = item.name;
+        modalTitle.textContent = item.name;
+        modalDesc.textContent = item.desc;
+        modalCaution.textContent = 'Caution : ' + item.caution;
+
+        modalPriceRows.innerHTML = '';
+        TIERS.forEach((tier, tIdx) => {
+          const row = document.createElement('tr');
+          row.className = tIdx === 0 ? 'active-row' : '';
+          row.dataset.tier = tIdx;
+
+          const priceVal = tierPrice(item.basePrice, tIdx);
+          const percent = tierDiscountPercent(tIdx);
+
+          const tdLabel = document.createElement('td');
+          tdLabel.textContent = tier.label;
+
+          const tdPrice = document.createElement('td');
+          tdPrice.className = 'price-cell';
+          tdPrice.innerHTML = priceVal + '€' + (percent > 0 ? ` <span class="discount-percent">-${percent}%</span>` : '');
+
+          row.appendChild(tdLabel);
+          row.appendChild(tdPrice);
+
+          row.addEventListener('click', () => {
+            modalPriceRows.querySelectorAll('tr').forEach((r) => r.classList.remove('active-row'));
+            row.classList.add('active-row');
+          });
+
+          modalPriceRows.appendChild(row);
+        });
+
+        modalOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modalOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      modalClose.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
       });
 
       renderGallery();
