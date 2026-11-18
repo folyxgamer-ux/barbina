@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/vina0125/repositories/barbina
+    - /bin/rsync -a --exclude='.git' --exclude='.cpanel.yml' --exclude='node_modules' ./ $DEPLOYPATH
