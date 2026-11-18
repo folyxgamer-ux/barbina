@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/vina0125/public_html/
-    - /bin/rsync -a --exclude='.git' --exclude='.cpanel.yml' public_html/ $DEPLOYPATH
+    - /bin/rsync -a --delete --exclude='.git' --exclude='.cpanel.yml' --exclude='node_modules' public_html/ $DEPLOYPATH
